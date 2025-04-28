@@ -30,7 +30,7 @@ async function handleRequest(request: Request): Promise<Response> {
   try {
     return await getAssetFromKV({
       request,
-      waitUntil(promise) {
+      waitUntil(promise: Promise<any>) {
         return (self as any).waitUntil(promise);
       },
     });
