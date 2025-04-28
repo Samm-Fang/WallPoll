@@ -1,0 +1,10 @@
+name = "wallpoll"
+main = "src/index.ts"
+compatibility_date = "2023-04-19"
+
+[vars]
+# Add any environment variables here if needed
+
+[[kv_namespaces]]
+binding = "WALLPOLL_DATA"
+id = "your-kv-namespace-id-here" # Replace with actual ID during deployment
