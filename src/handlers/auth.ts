@@ -11,7 +11,7 @@ export async function handleAuth(request: Request): Promise<Response> {
   }
 
   try {
-    const body = await request.json();
+    const body = await request.json() as { userId: string };
     const userId = parseInt(body.userId, 10);
 
     if (isNaN(userId) || userId < 1 || userId > 59) {
