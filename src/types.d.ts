@@ -41,4 +41,49 @@ interface URL {
   pathname: string;
   search: string;
   hash: string;
+  cf: CfProperties; // 添加 cf 属性
 }
+
+// Cloudflare Workers 运行时提供的 cf 属性类型
+interface CfProperties {
+  asn: number;
+  colo: string;
+  city: string;
+  country: string;
+  continent: string;
+  latitude: string;
+  longitude: string;
+  postalCode: string;
+  metroCode: string;
+  region: string;
+  regionCode: string;
+  timezone: string;
+  clientAcceptEncoding: string;
+  edgeRequestIp: string;
+  edgeRequestKeepAliveEnabled: boolean;
+  edgeRequestTlsCipher: string;
+  edgeRequestTlsVersion: string;
+  edgeRequestHost: string;
+  edgeRequestProtocol: string;
+  edgeRequestTcpRtt: number;
+  edgeRequestTimeToFirstByte: number;
+  edgeRequestKeepAliveHit: boolean;
+  edgeResponseResultType: string;
+  edgeResponseBytesSent: number;
+  edgeResponseLatency: number;
+  clientTrustScore: number;
+  clientTcpRtt: number;
+  clientApplicationRtt: number;
+  clientConnectionLatency: number;
+}
+
+
+// 添加 Env 接口定义
+interface Env {
+  DB: D1Database; // 对应 wrangler.toml 中的 D1 绑定
+  __STATIC_CONTENT: KVNamespace; // 对应 Workers Sites 的 KV 绑定
+  __STATIC_CONTENT_MANIFEST: string; // Workers Sites 的 manifest
+}
+
+// 声明 Cloudflare Workers 运行时提供的全局变量
+declare

@@ -1,4 +1,5 @@
 import { Router } from 'itty-router';
+import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
 import { handleUpload } from './handlers/upload.js';
 import { handleVote } from './handlers/vote.js';
 import { handleGallery } from './handlers/gallery.js';
@@ -13,24 +14,43 @@ router.post('/api/vote', handleVote);
 router.get('/api/gallery', handleGallery);
 router.get('/api/download/:id', handleDownload);
 
-import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
-
-// 静态文件服务
-router.get('*', async ({ url }, env) => {
-  const path = new URL(url).pathname;
+// 静态文件服务 - 使用@cloudflare/kv-asset-handler
+// 将静态文件服务路由移到最后
+router.get('*', async (request, env, ctx) => { // 确保包含 ctx 参数
   try {
-    const asset = await getAssetFromKV(env.ASSETS, path === '/' ? '/index.html' : path);
-    const contentType = path.endsWith('.html') ? 'text/html' : 
-                        path.endsWith('.css') ? 'text/css' : 
-                        path.endsWith('.ts') || path.endsWith('.js') ? 'application/javascript' : 'text/plain';
-    return new Response(asset.body, {
-      headers: { 'Content-Type': contentType }
+    // 使用Cloudflare Workers Sites推荐的方式
+    // @ts-ignore - 忽略类型检查，因为env.__STATIC_CONTENT等是运行时注入的
+    return await getAssetFromKV({
+      request,
+      waitUntil: (promise) => ctx.waitUntil(promise), // 使用 ctx.waitUntil
+    }, {
+      // @ts-ignore
+      ASSET_NAMESPACE: env.__STATIC_CONTENT,
+      // @ts-ignore
+      ASSET_MANIFEST: env.__STATIC_CONTENT_MANIFEST,
     });
   } catch (e) {
-    return new Response('Not found', { status: 404 });
+    // 如果找不到资源，尝试返回 index.html (适用于SPA)
+    try {
+      // @ts-ignore
+      let notFoundResponse = await getAssetFromKV({
+          request,
+          waitUntil: (promise) => ctx.waitUntil(promise), // 使用 ctx.waitUntil
+        }, {
+          // @ts-ignore
+          ASSET_NAMESPACE: env.__STATIC_CONTENT,
+          // @ts-ignore
+          ASSET_MANIFEST: env.__STATIC_CONTENT_MANIFEST,
+          mapRequestToAsset: (req: Request) => new Request(`${new URL(req.url).origin}/index.html`, req),
+        });
+
+      return new Response(notFoundResponse.body, { ...notFoundResponse, status: 200 });
+    } catch (e) {}
+
+    return new Response('Not Found', { status: 404 });
   }
 });
 
 export default {
-  fetch: router.handle
+  fetch: router.handle as unknown as (request: Request, env: Env, ctx: ExecutionContext) => Promise<Response>
 };
