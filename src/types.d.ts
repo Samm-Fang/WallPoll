@@ -5,12 +5,39 @@ interface Request {
   json(): Promise<any>;
   text(): Promise<string>;
   arrayBuffer(): Promise<ArrayBuffer>;
+  cf: CfProperties;
 }
 
-declare class Response {
-  constructor(body: any, init?: ResponseInit);
-  status: number;
-  headers: Headers;
+interface CfProperties {
+  asn: number;
+  colo: string;
+  city: string;
+  country: string;
+  continent: string;
+  latitude: string;
+  longitude: string;
+  postalCode: string;
+  metroCode: string;
+  region: string;
+  regionCode: string;
+  timezone: string;
+  clientAcceptEncoding: string;
+  edgeRequestIp: string;
+  edgeRequestKeepAliveEnabled: boolean;
+  edgeRequestTlsCipher: string;
+  edgeRequestTlsVersion: string;
+  edgeRequestHost: string;
+  edgeRequestProtocol: string;
+  edgeRequestTcpRtt: number;
+  edgeRequestTimeToFirstByte: number;
+  edgeRequestKeepAliveHit: boolean;
+  edgeResponseResultType: string;
+  edgeResponseBytesSent: number;
+  edgeResponseLatency: number;
+  clientTrustScore: number;
+  clientTcpRtt: number;
+  clientApplicationRtt: number;
+  clientConnectionLatency: number;
 }
 
 interface Headers {
