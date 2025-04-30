@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WallPoll - 壁纸投票画廊</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>WallPoll</h1>
+            <div id="user-info">
+                <input type="number" id="user-id" min="1" max="59" placeholder="输入用户ID (1-59)">
+                <button id="login">登录</button>
+            </div>
+        </header>
+        <main>
+            <div id="upload-section" style="display: none;">
+                <h2>上传壁纸</h2>
+                <input type="file" id="upload-file" accept="image/*">
+                <button id="upload-button">上传</button>
+            </div>
+            <div id="gallery">
+                <h2>壁纸画廊</h2>
+                <div id="image-grid"></div>
+            </div>
+            <div id="vote-section" style="display: none;">
+                <h2>投票</h2>
+                <p>您可以投出最多2票，不能投给自己上传的作品。</p>
+                <button id="vote-button">投票</button>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="/ts/frontend.ts"></script>
+</body>
+</html>

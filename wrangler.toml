@@ -1,0 +1,13 @@
+name = "wallpoll"
+main = "src/index.ts"
+compatibility_date = "2023-10-30"
+
+[vars]
+# 环境变量可以在这里配置
+
+[[d1_databases]]
+binding = "DB"
+database_name = "wallpoll-db"
+database_id = "your-database-id"
+
+# 其他配置可以根据需要添加

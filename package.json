@@ -1,0 +1,18 @@
+{
+  "name": "wallpoll",
+  "version": "1.0.0",
+  "description": "A wallpaper gallery with voting and upload features",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler publish"
+  },
+  "dependencies": {
+    "@cloudflare/d1": "^1.0.0",
+    "itty-router": "^2.6.1"
+  },
+  "devDependencies": {
+    "@cloudflare/wrangler": "^3.0.0",
+    "typescript": "^5.0.0"
+  }
+}

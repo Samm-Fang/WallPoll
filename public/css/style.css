@@ -1,0 +1,154 @@
+/* 全局样式 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5; /* 浅灰色背景 */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#app {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* 头部样式 */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #6c829e; /* 浅蓝色标题 */
+    margin: 0;
+    font-size: 2em;
+}
+
+#user-info {
+    display: flex;
+    gap: 10px;
+}
+
+#user-id {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #6c829e; /* 浅蓝色按钮 */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #5a6f8c;
+}
+
+/* 主要内容样式 */
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+h2 {
+    color: #6c829e; /* 浅蓝色标题 */
+    margin-bottom: 10px;
+}
+
+/* 上传区域 */
+#upload-section {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+#upload-file {
+    margin-bottom: 10px;
+}
+
+/* 画廊样式 */
+#gallery {
+    width: 100%;
+}
+
+#image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.image-item {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-item:hover {
+    transform: scale(1.05);
+}
+
+.image-item .vote-count {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px 0 0 0;
+    font-size: 0.9em;
+}
+
+/* 投票区域 */
+#vote-section {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    #app {
+        padding: 10px;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    #image-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+    }
+}
