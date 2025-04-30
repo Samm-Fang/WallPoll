@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WallPoll - Wallpaper Gallery</title>
+    <link rel="stylesheet" href="/style.css">
+    <!-- Cropper.js CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>WallPoll</h1>
+        <p>Vote for your favorite wallpaper!</p>
+        <div id="user-info" class="hidden">
+            Logged in as User ID: <span id="user-id-display"></span>
+            <button id="logout-button">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="login-section">
+            <h2>Login</h2>
+            <p>Enter your User ID (1-59):</p>
+            <input type="number" id="user-id-input" min="1" max="59" placeholder="Your ID">
+            <button id="login-button">Login</button>
+            <p id="login-error" class="error-message hidden"></p>
+        </section>
+
+        <section id="gallery-section" class="hidden">
+            <h2>Gallery</h2>
+            <div id="gallery-grid">
+                <!-- Images will be loaded here -->
+            </div>
+        </section>
+
+        <section id="upload-section" class="hidden">
+            <h2>Upload Your Wallpaper</h2>
+            <p>Upload one image (will be cropped to 16:9).</p>
+            <input type="file" id="image-upload-input" accept="image/*">
+            <button id="upload-button" disabled>Upload</button>
+             <p id="upload-status" class="status-message hidden"></p>
+            <!-- Add preview and cropping elements later -->
+        </section>
+    </main>
+
+    <!-- Cropping Modal -->
+    <div id="crop-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Crop Image (16:9)</h2>
+            <div class="img-container">
+                <img id="image-to-crop" src="#" alt="Image to crop">
+            </div>
+            <div class="modal-actions">
+                 <button id="cancel-crop-button">Cancel</button>
+                <button id="confirm-crop-button">Confirm & Upload</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>WallPoll Project</p>
+    </footer>
+
+    <!-- Cropper.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+    <!-- Frontend logic -->
+    <script src="/script.js"></script>
+
+</body>
+</html>
