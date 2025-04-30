@@ -9,10 +9,11 @@
   },
   "dependencies": {
     "@cloudflare/d1": "^1.0.0",
+    "@cloudflare/kv-asset-handler": "^0.3.0",
     "itty-router": "^2.6.1"
   },
   "devDependencies": {
-    "@cloudflare/wrangler": "^3.0.0",
+    "wrangler": "^4.0.0",
     "typescript": "^5.0.0"
   }
 }

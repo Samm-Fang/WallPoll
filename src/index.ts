@@ -13,30 +13,23 @@ router.post('/api/vote', handleVote);
 router.get('/api/gallery', handleGallery);
 router.get('/api/download/:id', handleDownload);
 
-// 静态文件服务
-router.get('*', async ({ url }) => {
-  const path = new URL(url).pathname;
-  if (path === '/' || path.startsWith('/index.html')) {
-    return new Response(await fetchAsset('index.html'), {
-      headers: { 'Content-Type': 'text/html' }
-    });
-  } else if (path.startsWith('/css/')) {
-    return new Response(await fetchAsset(path.slice(1)), {
-      headers: { 'Content-Type': 'text/css' }
-    });
-  } else if (path.startsWith('/ts/')) {
-    return new Response(await fetchAsset(path.slice(1)), {
-      headers: { 'Content-Type': 'application/javascript' }
-    });
-  }
-  return new Response('Not found', { status: 404 });
-});
+import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
 
-async function fetchAsset(path: string): Promise<ArrayBuffer> {
-  // 在实际部署中，静态文件会通过Cloudflare Pages或其他方式提供
-  // 这里仅作示例
-  return new ArrayBuffer(0);
-}
+// 静态文件服务
+router.get('*', async ({ url }, env) => {
+  const path = new URL(url).pathname;
+  try {
+    const asset = await getAssetFromKV(env.ASSETS, path === '/' ? '/index.html' : path);
+    const contentType = path.endsWith('.html') ? 'text/html' : 
+                        path.endsWith('.css') ? 'text/css' : 
+                        path.endsWith('.ts') || path.endsWith('.js') ? 'application/javascript' : 'text/plain';
+    return new Response(asset.body, {
+      headers: { 'Content-Type': contentType }
+    });
+  } catch (e) {
+    return new Response('Not found', { status: 404 });
+  }
+});
 
 export default {
   fetch: router.handle

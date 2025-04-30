@@ -8,6 +8,6 @@ compatibility_date = "2023-10-30"
 [[d1_databases]]
 binding = "DB"
 database_name = "wallpoll-db"
-database_id = "your-database-id"
+database_id = "6ac026fb-e33b-41f0-862a-ff154d5f8bb1"
 
 # 其他配置可以根据需要添加
