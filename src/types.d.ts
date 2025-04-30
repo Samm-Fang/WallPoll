@@ -5,40 +5,43 @@ interface Request {
   json(): Promise<any>;
   text(): Promise<string>;
   arrayBuffer(): Promise<ArrayBuffer>;
+  cf: CfProperties;
 }
 
-declare class Response {
-  constructor(body: any, init?: ResponseInit);
-  status: number;
-  headers: Headers;
+interface CfProperties {
+  asn: number;
+  colo: string;
+  city: string;
+  country: string;
+  continent: string;
+  latitude: string;
+  longitude: string;
+  postalCode: string;
+  metroCode: string;
+  region: string;
+  regionCode: string;
+  timezone: string;
+  clientAcceptEncoding: string;
+  edgeRequestIp: string;
+  edgeRequestKeepAliveEnabled: boolean;
+  edgeRequestTlsCipher: string;
+  edgeRequestTlsVersion: string;
+  edgeRequestHost: string;
+  edgeRequestProtocol: string;
+  edgeRequestTcpRtt: number;
+  edgeRequestTimeToFirstByte: number;
+  edgeRequestKeepAliveHit: boolean;
+  edgeResponseResultType: string;
+  edgeResponseBytesSent: number;
+  edgeResponseLatency: number;
+  clientTrustScore: number;
+  clientTcpRtt: number;
+  clientApplicationRtt: number;
+  clientConnectionLatency: number;
 }
 
-interface Headers {
-  get(name: string): string | null;
-  set(name: string, value: string): void;
-  append(name: string, value: string): void;
-}
-
-interface ResponseInit {
-  status?: number;
-  statusText?: string;
-  headers?: Headers | Record<string, string>;
-}
-
-declare var URL: {
-  new(url: string, base?: string): URL;
-};
-
-declare var fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
-
-interface URL {
-  href: string;
-  origin: string;
-  protocol: string;
-  host: string;
-  hostname: string;
-  port: string;
-  pathname: string;
-  search: string;
-  hash: string;
+interface Env {
+  DB: D1Database;
+  __STATIC_CONTENT: KVNamespace;
+  __STATIC_CONTENT_MANIFEST: string;
 }

@@ -1,4 +1,5 @@
 import { Router } from 'itty-router';
+import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
 import { handleUpload } from './handlers/upload.js';
 import { handleVote } from './handlers/vote.js';
 import { handleGallery } from './handlers/gallery.js';
@@ -13,24 +14,32 @@ router.post('/api/vote', handleVote);
 router.get('/api/gallery', handleGallery);
 router.get('/api/download/:id', handleDownload);
 
-import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
-
 // 静态文件服务
-router.get('*', async ({ url }, env) => {
-  const path = new URL(url).pathname;
+router.get('*', async (request, env, ctx) => {
   try {
-    const asset = await getAssetFromKV(env.ASSETS, path === '/' ? '/index.html' : path);
-    const contentType = path.endsWith('.html') ? 'text/html' : 
-                        path.endsWith('.css') ? 'text/css' : 
-                        path.endsWith('.ts') || path.endsWith('.js') ? 'application/javascript' : 'text/plain';
-    return new Response(asset.body, {
-      headers: { 'Content-Type': contentType }
+    return await getAssetFromKV({
+      request,
+      waitUntil: (promise) => ctx.waitUntil(promise),
+    }, {
+      ASSET_NAMESPACE: env.__STATIC_CONTENT,
+      ASSET_MANIFEST: env.__STATIC_CONTENT_MANIFEST,
     });
   } catch (e) {
-    return new Response('Not found', { status: 404 });
+    try {
+      let notFoundResponse = await getAssetFromKV({
+          request,
+          waitUntil: (promise) => ctx.waitUntil(promise),
+        }, {
+          ASSET_NAMESPACE: env.__STATIC_CONTENT,
+          ASSET_MANIFEST: env.__STATIC_CONTENT_MANIFEST,
+          mapRequestToAsset: (req) => new Request(`${new URL(req.url).origin}/index.html`, req),
+        });
+      return new Response(notFoundResponse.body, { ...notFoundResponse, status: 200 });
+    } catch (e) {}
+    return new Response('Not Found', { status: 404 });
   }
 });
 
 export default {
-  fetch: router.handle
+  fetch: router.handle as unknown as (request: Request, env: Env, ctx: ExecutionContext) => Promise<Response>
 };
