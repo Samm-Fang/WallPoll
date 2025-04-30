@@ -1,0 +1,59 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "lucky-tooth-1180",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-04-30",
+	"assets": {
+		"binding": "ASSETS", // Keep this for serving static files like CSS/JS easily
+		"directory": "./public"
+	},
+	"observability": {
+		"enabled": true
+	},
+	/**
+	 * Smart Placement
+	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
+	 */
+	// "placement": { "mode": "smart" },
+
+	/**
+	 * Bindings
+	 * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
+	 * databases, object storage, AI inference, real-time communication and more.
+	 * https://developers.cloudflare.com/workers/runtime-apis/bindings/
+	 */
+
+	/**
+	 * Environment Variables
+	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
+	 */
+	// "vars": { "MY_VARIABLE": "production_value" },
+	/**
+	 * Note: Use secrets to store sensitive data.
+	 * https://developers.cloudflare.com/workers/configuration/secrets/
+	 */
+
+	/**
+	 * Service Bindings (communicate between multiple Workers)
+	 * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
+	 */
+	// "services": [{ "binding": "MY_SERVICE", "service": "my-service" }],
+
+	/**
+	 * KV Namespace Bindings
+	 * https://developers.cloudflare.com/workers/runtime-apis/kv/
+	 * You must create these in the Cloudflare dashboard first.
+	 */
+	"kv_namespaces": [
+		{ "binding": "WALLPOLL_KV", "id": "YOUR_KV_NAMESPACE_ID", "preview_id": "YOUR_PREVIEW_KV_NAMESPACE_ID" } // <-- Replace with actual IDs
+	],
+
+	/**
+	 * R2 Bucket Bindings
+	 * https://developers.cloudflare.com/workers/runtime-apis/r2/
+	 * You must create these in the Cloudflare dashboard first.
+	 */
+	"r2_buckets": [
+		{ "binding": "WALLPOLL_IMAGES", "bucket_name": "your-r2-bucket-name", "preview_bucket_name": "your-preview-r2-bucket-name" } // <-- Replace with actual names
+	]
+}

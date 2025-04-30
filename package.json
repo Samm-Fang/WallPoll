@@ -1,19 +1,16 @@
 {
-  "name": "wallpoll",
-  "version": "1.0.0",
-  "description": "A wallpaper gallery with voting and upload functionality on Cloudflare Workers",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "dev": "wrangler dev",
-    "deploy": "wrangler publish"
-  },
-  "dependencies": {
-    "@cloudflare/kv-asset-handler": "^0.3.0"
-  },
-  "devDependencies": {
-    "@cloudflare/workers-types": "^4.20230419.0",
-    "typescript": "^5.0.4",
-    "wrangler": "^3.0.0"
-  }
+	"name": "lucky-tooth-1180",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"cf-typegen": "wrangler types"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20250430.0",
+		"typescript": "^5.5.2",
+		"wrangler": "^4.14.0"
+	}
 }
